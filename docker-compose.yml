@@ -1,0 +1,5 @@
+services:
+    notify:
+      image: notify
+      build: .
+      env_file: .env
