@@ -20,8 +20,9 @@ export class Router {
 
     route(topic: string, payload: string) {
         this.routes.forEach((route) => {
-            if (wcmatch(route.topic as string)(topic.split("/")[1])) {
-                route.action.route(topic.substring(0, this.topic.length), payload)
+            if (wcmatch(route.topic as string)(topic.split("/")[0])) {
+                route.action.route(topic.split("/").slice(1).join("/")
+                    , payload)
             }
         })
     }

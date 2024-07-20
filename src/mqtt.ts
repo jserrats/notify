@@ -23,6 +23,15 @@ export function initMqtt(router: Router) {
     });
 
     client.on("message", (topic, message) => {
+        if (topic.slice(-1) === "/") {
+            // removes trailing /
+            topic = topic.slice(0, -1)
+        }
+        if (topic[0] === "/") {
+            // removes heading /
+            topic = topic.slice(1)
+        }
+        topic = topic.split("/").slice(1).join("/")
         router.route(topic, message.toString())
     });
 
