@@ -26,6 +26,38 @@ export class TelegramLog extends Router {
             }
 
             text = text + messageObject.message
+            sender.sendMessage(text, { recipient: messageObject.recipient })
+
+        } catch {
+            sender.sendMessage(message)
+        }
+    }
+}
+
+
+export class TelegramStatus extends Router {
+
+    static icons = {
+        "off": "🔴",
+        "on": "🟢",
+    }
+
+    constructor(topic: OnOff) {
+        super(topic)
+        this.topic = topic
+    }
+
+    public route(topic: string, message: string) {
+
+        try {
+            const messageObject = JSON.parse(message) as TelegramMessage
+            let text: string = `${TelegramStatus.icons[this.topic as OnOff]} *${this.topic.toUpperCase()}:* `
+
+            if (messageObject.title !== undefined) {
+                text = `${text} *${messageObject.title}*\n`
+            }
+
+            text = text + messageObject.message
             sender.sendMessage(text)
 
         } catch {
@@ -33,3 +65,5 @@ export class TelegramLog extends Router {
         }
     }
 }
+
+type OnOff = "off" | "on"
