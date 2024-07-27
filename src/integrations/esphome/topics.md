@@ -1,0 +1,2 @@
+esphome/kitchen/button/kitchen_audio_notification/command
+esphome/minimatrix/button/notify_living_room/command
