@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import 'dotenv/config'
 import { TelegramRecipients } from "mqtt-assistant/src/components/telegram/types"
-
+import { telegram } from "mqtt-assistant"
 class TelegramSender {
     private instance: AxiosInstance;
     private recipients: Record<TelegramRecipients, string>
@@ -43,9 +43,10 @@ class TelegramSender {
             chat_id: recipientID,
             text: message,
             parse_mode: "MarkdownV2"
+        }).catch((error) => {
+            telegram.error(error as Error)
         })
 
-        console.log(message)
     }
 }
 
